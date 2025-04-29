@@ -10,6 +10,7 @@ from sqlalchemy.orm import declarative_base
 from typing import List, Dict, Optional
 from dotenv import load_dotenv
 from datetime import datetime
+from fastapi.middleware.cors import CORSMiddleware
 
 # # Can remove these debug print lines
 # print("--- Python Executable ---")
@@ -68,6 +69,15 @@ def get_db():
         db.close()
 
 app = FastAPI(title="Product API")
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
 
 # Root endpoint
 @app.get("/", 
